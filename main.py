@@ -49,7 +49,7 @@ def data_loader():
     data = []
 
     logging.info("Начало загрузки данных")
-    for page_number in range(1, 50):
+    for page_number in range(1, 51):
         books_url = parse_book_list(page_number)
         for url in books_url:
             book = parse_book_info(url)
@@ -65,7 +65,7 @@ def data_checker(df):
     count_before = df.shape[0]
 
     df.dropna()
-    # Ищем дубликаты по полю UPC (Сначала сортируем, потом удаляем)
+    # Ищем дубликаты по полю upc
     df.drop_duplicates(subset=['upc'], inplace=True)
     count_after = df.shape[0]
     df.to_csv(file_save, encoding='utf-8', index=False, sep=';')
@@ -84,8 +84,7 @@ def job():
     data_saver(df)
 
 
-#schedule.every().day.at("19:25", "Europe/Moscow").do(job)
-#while True:
-#    schedule.run_pending()
-#    time.sleep(1)
-job()
+schedule.every().day.at("19:00", "Europe/Moscow").do(job)
+while True:
+    schedule.run_pending()
+    time.sleep(1)
