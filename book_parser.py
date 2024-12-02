@@ -17,8 +17,7 @@ class BookParser:
 
             self.title = obj_main.h1.text
             if obj_page.find('div', {'id': 'product_description'}):
-                self.description = obj_page.find('div', {'id': 'product_description'}).findNext('p').text.replace('"',
-                                                                                                                  '""')
+                self.description = obj_page.find('div', {'id': 'product_description'}).findNext('p').text.replace('"','""')
             else:
                 self.description = ''
 
